@@ -12,6 +12,8 @@ class git {
 	package {
 		"git" :
 			ensure => latest,
-			require => [Exec["add-git-ppa-repo"]],
+			require => [Exec["add-git-ppa-repo"]];
+		"libcurl4-gnutls-dev" :
+			ensure => latest,		
 	}
 }
