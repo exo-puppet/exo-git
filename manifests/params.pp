@@ -2,8 +2,15 @@
 class git::params {
 
     case $::operatingsystem {
-        /(Ubuntu|Debian)/: {
-            $package_name   = "git"
+        /(Ubuntu)/: {
+            case $::lsbdistrelease {
+                "10.04": {
+                    $package_name   = "git-core"
+                }
+                default: {
+                    $package_name   = "git"
+                }
+            }
         }
     }
 }
