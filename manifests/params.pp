@@ -12,5 +12,8 @@ class git::params {
                 }
             }
         }
+        default: {
+            fail ("The ${module_name} module is not supported on $::operatingsystem")
+        }        
     }
 }
