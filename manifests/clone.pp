@@ -6,7 +6,7 @@ define git::clone ($url, $path, $user) {
             path   => "/usr/bin",
             user => "${user}",
             group => "${user}",
-            logoutput => "true",
+            logoutput => true,
             creates => "${path}/.git",
             require => [File["${path}"],Class["git::install"]],
     } 
