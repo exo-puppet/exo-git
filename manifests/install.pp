@@ -14,23 +14,21 @@ class git::install {
           notify     => Exec['repo-update'],
         }
 
-        package { 'git':
+        package { $git::params::package_name:
           ensure  => $git::lastversion ? {
             true    => latest,
             default => present,
           },
-          name    => $git::params::package_name,
           require => [
             Repo::Define['git-core-ppa-repo'],
             Exec['repo-update']],
         }
       } else {
-        package { 'git':
+        package { $git::params::package_name:
           ensure  => $git::lastversion ? {
             true    => latest,
             default => present,
           },
-          name    => $git::params::package_name,
           require => [
             Exec['repo-update']],
         }
