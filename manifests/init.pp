@@ -11,7 +11,7 @@ class git (
     fail('lastversion must be true or false')
   }
 
-  include repo
+  include stdlib
 
   include git::params, git::install
 }

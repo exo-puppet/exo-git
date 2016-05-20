@@ -2,37 +2,12 @@
 class git::install {
   case $::operatingsystem {
     /(Ubuntu)/ : {
-      if ($git::use_ppa == true) {
-        repo::define { 'git-core-ppa-repo':
-          file_name  => 'git-core-ppa',
-          url        => 'http://ppa.launchpad.net/git-core/ppa/ubuntu',
-          sections   => [
-            'main'],
-          source     => true,
-          key        => 'E1DF1F24',
-          key_server => 'keyserver.ubuntu.com',
-          notify     => Exec['repo-update'],
-        }
-
-        package { $git::params::package_name:
-          ensure  => $git::lastversion ? {
-            true    => latest,
-            default => present,
-          },
-          require => [
-            Repo::Define['git-core-ppa-repo'],
-            Exec['repo-update']],
-        }
-      } else {
-        package { $git::params::package_name:
-          ensure  => $git::lastversion ? {
-            true    => latest,
-            default => present,
-          },
-          require => [
-            Exec['repo-update']],
-        }
-      }
+      ensure_packages ($git::params::package_name, { 'ensure' => $git::lastversion ? {
+        true    => latest,
+        default => present,
+      },
+        'require' => Class['apt::update']
+      } )
     }
   }
 
